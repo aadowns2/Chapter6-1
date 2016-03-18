@@ -44,6 +44,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App_Data\CustomerData.DAT" />
+    <None Include="Misc.cpy" />
+    <None Include="WS_Date.cpy" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Micro Focus\Visual COBOL\v1.0\MicroFocus.COBOL.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
