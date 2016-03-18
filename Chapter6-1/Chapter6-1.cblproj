@@ -28,22 +28,28 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms">
+      <Name>System.Windows.Forms</Name>
+    </Reference>
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Chapter6-1.cbl" />
+    <Compile Include="Validations.cbl" />
   </ItemGroup>
   <ItemGroup>
     <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Report\" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App_Data\CustomerData.DAT" />
+    <None Include="App_Report\CustomerReport.Dat" />
+    <None Include="DetailLine.cpy" />
+    <None Include="HeaderMain.cpy" />
+    <None Include="HeaderColumns.cpy" />
     <None Include="Misc.cpy" />
     <None Include="WS_Date.cpy" />
   </ItemGroup>

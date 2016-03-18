@@ -16,7 +16,7 @@
                        File Status is File_Status
                        Organization is Sequential.
                        
-                   Select CustomerReport assign to Printer
+                   Select CustomerReportFile assign to CustomerReport
                        File Status is File_Status
                        Organization is Sequential.
                
@@ -35,22 +35,35 @@
                    05  Year_Trans                          PIC X(5).
                    05  Amount_Trans                        PIC 9(4)V9(2).
                    
-           FD  CustomerReport
+           FD  CustomerReportFile
                Record Contains 100 Characters.
-               01  Print_Buffer                            PIC X(100).
+               01  CustomerReport.
+                   05  Print_Buffer                            PIC X(100).
            
            Working-Storage Section.
                COPY "WS_Date.cpy" REPLACING LEADING ==Prefix== BY ==WS==.
                COPY "Misc.cpy".
-           
-           Local-Storage Section.
-           
-           Linkage Section.
-           
-           Report Section.
+               COPY "HeaderMain.cpy".
+               COPY "HeaderColumns.cpy".
+               COPY "DetailLine.cpy".
            
        Procedure Division.
        
+           Initilization.
+               OPEN INPUT CustomerFile
+                   CALL "Validations" USING by CONTENT File_Status.
+               OPEN OUTPUT CustomerReportFile
+                   CALL "Validations" USING by CONTENT File_Status.
+                   
+                   MOVE FUNCTION CURRENT-DATE TO WS_Current_Date.
+                   MOVE WS_Current_Month to Header_Month.
+                   MOVE WS_Current_Day to Header_Day.
+                   MOVE WS_Current_Year TO Header_Year.
+                   
+                   WRITE CustomerReport FROM HeaderMain.
+                   WRITE CustomerReport FROM HeaderMain2 AFTER ADVANCING 1 LINES.
+                   WRITE CustomerReport FROM HeaderDate AFTER ADVANCING 1 LINES.
+           
            Stop "Press <CR> to End Program"
            Stop Run.
            
