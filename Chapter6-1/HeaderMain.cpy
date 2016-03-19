@@ -5,10 +5,4 @@
        01  HeaderMain2.
            05                  PIC X(17)   value spaces.
            05                  PIC X(41)   value 'Prepared for the Company By Anthony Downs'.
-       01  HeaderDate.
-           05                  PIC X(25)   value spaces.
-           05  Header_Month    PIC X(2).
-           05                  PIC X(1)    value '/'.
-           05  Header_Day      PIC X(2).
-           05                  PIC X(1)    value '/'.
-           05  Header_Year     PIC X(4).
+       01  HeaderDate          PIC 99/99/9999.

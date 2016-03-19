@@ -35,6 +35,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Chapter6-1.cbl" />
+    <Compile Include="DateFormat.cbl" />
     <Compile Include="Validations.cbl" />
   </ItemGroup>
   <ItemGroup>

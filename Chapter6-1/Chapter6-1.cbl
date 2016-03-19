@@ -12,11 +12,11 @@
                
            Input-Output Section.
                File-Control.
-                   Select CustomerFile assign to CustomerData
+                   Select CustMast assign to CustomerData
                        File Status is File_Status
                        Organization is Sequential.
                        
-                   Select CustomerReportFile assign to CustomerReport
+                   Select CustRpt assign to CustomerReport
                        File Status is File_Status
                        Organization is Sequential.
                
@@ -24,7 +24,7 @@
                
        Data Division.
            File Section.
-           FD  CustomerFile
+           FD  CustMast
                Record Contains 24 Characters.
                01  CustomerRecord.
                    05  Initials.
@@ -35,10 +35,9 @@
                    05  Year_Trans                          PIC X(5).
                    05  Amount_Trans                        PIC 9(4)V9(2).
                    
-           FD  CustomerReportFile
+           FD  CustRpt
                Record Contains 100 Characters.
-               01  CustomerReport.
-                   05  Print_Buffer                            PIC X(100).
+               01  Print_Buffer                            PIC X(100).
            
            Working-Storage Section.
                COPY "WS_Date.cpy" REPLACING LEADING ==Prefix== BY ==WS==.
@@ -50,21 +49,34 @@
        Procedure Division.
        
            Initilization.
-               OPEN INPUT CustomerFile
+               OPEN INPUT CustMast
                    CALL "Validations" USING by CONTENT File_Status.
-               OPEN OUTPUT CustomerReportFile
+               OPEN OUTPUT CustRpt
                    CALL "Validations" USING by CONTENT File_Status.
+                 
+                MOVE FUNCTION CURRENT-DATE TO WS_Current_Date.
+                
+                CALL 'DateFormat' USING WS_Current_Date.
+                MOVE WS_Current_Date TO WS_Date
+                MOVE WS_Date TO Formatted_Date.
+                INVOKE type Debug::WriteLine(Formatted_Date).
                    
-                   MOVE FUNCTION CURRENT-DATE TO WS_Current_Date.
-                   MOVE WS_Current_Month to Header_Month.
-                   MOVE WS_Current_Day to Header_Day.
-                   MOVE WS_Current_Year TO Header_Year.
+      *            PERFORM 900-Date-Format
                    
-                   WRITE CustomerReport FROM HeaderMain.
-                   WRITE CustomerReport FROM HeaderMain2 AFTER ADVANCING 1 LINES.
-                   WRITE CustomerReport FROM HeaderDate AFTER ADVANCING 1 LINES.
+                   WRITE Print_Buffer FROM HeaderMain
+                   WRITE Print_Buffer FROM HeaderMain2 AFTER ADVANCING 1 LINES
+                   WRITE Print_Buffer FROM HeaderDate AFTER ADVANCING 1 LINES
            
-           Stop "Press <CR> to End Program"
            Stop Run.
            
+      *    900-Date-Format.
+      *    
+      *            MOVE FUNCTION CURRENT-DATE TO Current_Date.
+      *            MOVE CD_Year TO WS_Year_Temp.
+      *            MOVE CD_Month TO WS_Month_Temp.
+      *            MOVE CD_Day TO WS_Day_Temp.
+      *            MOVE WS_Date TO HeaderDate.
+      *            
+      *            INVOKE type Debug::WriteLine(HeaderDate).
+                   
        End Program.
