@@ -9,7 +9,7 @@
            05 WS_Year                      PIC 9(4).
 
        LINKAGE SECTION.
-           COPY "WS_Date.cpy" REPLACING LEADING ==Prefix== BY LK.
+           COPY "CopyBooks\WS_Date.cpy" REPLACING LEADING ==Prefix== BY LK.
        
        PROCEDURE DIVISION USING LK_Current_Date.
        

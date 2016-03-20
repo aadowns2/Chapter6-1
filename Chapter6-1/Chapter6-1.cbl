@@ -40,11 +40,11 @@
                01  Print_Buffer                            PIC X(132).
            
            Working-Storage Section.
-               COPY "WS_Date.cpy" REPLACING LEADING ==Prefix== BY ==WS==.
-               COPY "Misc.cpy".
-               COPY "HeaderMain.cpy".
-               COPY "HeaderColumns.cpy".
-               COPY "DetailLine.cpy".
+               COPY "CopyBooks/WS_Date.cpy" REPLACING LEADING ==Prefix== BY ==WS==.
+               COPY "CopyBooks/Misc.cpy".
+               COPY "CopyBooks/HeaderMain.cpy".
+               COPY "CopyBooks\HeaderColumns.cpy".
+               COPY "COpyBooks\DetailLine.cpy".
            
        Procedure Division.
        

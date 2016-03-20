@@ -35,9 +35,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Chapter6-1.cbl" />
-    <Compile Include="DateFormat.cbl" />
-    <Compile Include="TimeFormat.cbl" />
-    <Compile Include="Validations.cbl" />
+    <Compile Include="SubPrograms\DateFormat.cbl" />
+    <Compile Include="SubPrograms\TimeFormat.cbl" />
+    <Compile Include="SubPrograms\Validations.cbl" />
   </ItemGroup>
   <ItemGroup>
     <Import Include="System.Diagnostics" />
@@ -49,11 +49,11 @@
   <ItemGroup>
     <None Include="App_Data\CustomerData.DAT" />
     <None Include="App_Report\CustomerReport.Dat" />
-    <None Include="DetailLine.cpy" />
-    <None Include="HeaderMain.cpy" />
-    <None Include="HeaderColumns.cpy" />
-    <None Include="Misc.cpy" />
-    <None Include="WS_Date.cpy" />
+    <None Include="CopyBooks\DetailLine.cpy" />
+    <None Include="CopyBooks\HeaderMain.cpy" />
+    <None Include="CopyBooks\HeaderColumns.cpy" />
+    <None Include="CopyBooks\Misc.cpy" />
+    <None Include="CopyBooks\WS_Date.cpy" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Micro Focus\Visual COBOL\v1.0\MicroFocus.COBOL.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
