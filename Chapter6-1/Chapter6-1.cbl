@@ -14,11 +14,11 @@
                File-Control.
                    Select CustMast assign to CustomerData
                        File Status is File_Status
-                       Organization is Sequential.
+                       Organization is Line Sequential.
                        
                    Select CustRpt assign to CustomerReport
                        File Status is File_Status
-                       Organization is Sequential.
+                       Organization is Line Sequential.
                
                I-O-Control.
                
@@ -37,7 +37,7 @@
                    
            FD  CustRpt
                Record Contains 100 Characters.
-               01  Print_Buffer                            PIC X(250).
+               01  Print_Buffer                            PIC X(132).
            
            Working-Storage Section.
                COPY "WS_Date.cpy" REPLACING LEADING ==Prefix== BY ==WS==.
@@ -49,29 +49,46 @@
        Procedure Division.
        
            Initilization.
+			   INITIALIZE Print_Buffer.
                OPEN INPUT CustMast
                    CALL "Validations" USING by CONTENT File_Status.
                OPEN OUTPUT CustRpt
                    CALL "Validations" USING by CONTENT File_Status.
-                   
-               MOVE FUNCTION CURRENT-DATE (1:8) TO WS_Current_Date.
-               MOVE FUNCTION CURRENT-DATE(9:8) to WS_Current_Time.
-                   
-               PERFORM 900-FormatDate.
-               PERFORM 1000-FormatTime.
                
+               PERFORM 100-Write-Headings.
+               PERFORM 200-Read-Records until No_More_Records.
+               PERFORM 400-Close-Program.
+               STOP RUN.
+               
+           100-Write-Headings.
+               PERFORM 500-FormatDate
+               PERFORM 600-FormatTime
                WRITE Print_Buffer FROM HeaderMain
-      *        WRITE Print_Buffer FROM HeaderMain2 AFTER ADVANCING 1 LINES
-      *        WRITE Print_Buffer FROM HeaderDate AFTER ADVANCING 1 LINES
-      *        WRITE Print_Buffer FROM HeaderTime.
-           
-           Stop Run.
-       
-           900-FormatDate.
-               CALL 'DateFormat' USING WS_Current_Date
+               WRITE Print_Buffer FROM HeaderMain2 AFTER ADVANCING 1 LINES.
+               WRITE Print_Buffer FROM HeaderMain3 AFTER ADVANCING 1 LINES.
+               
+           200-Read-Records.
+               READ CustMast
+                   AT END SET No_More_Records TO TRUE
+                       NOT AT END
+                           PERFORM 300-Write-Records.
+                           
+           300-Write-Records.
+               MOVE CORRESPONDING CustomerRecord TO CustomerDetail
+               WRITE Print_Buffer FROM CustomerDetail AFTER ADVANCING 1 LINES.
+               
+           400-Close-Program.
+               CLOSE CustMast
+               CLOSE CustRpt.
+               
+           500-FormatDate.
+               MOVE FUNCTION CURRENT-DATE (1:8) TO WS_Current_Date
+               CALL 'DateFormat' USING WS_Current_Date.
                UNSTRING WS_Current_Date INTO HeaderDate.
-           1000-FormatTime.
-               CALL 'TimeFormat' USING WS_Current_Time
-               MOVE WS_Current_Time TO HeaderTime.
+               
+           600-FormatTime.
+               MOVE FUNCTION CURRENT-DATE(9:8) to WS_Current_Time
+               CALL 'TimeFormat' USING WS_Current_Time.
+               UNSTRING WS_Current_Time INTO HeaderTime.
                
        End Program.
