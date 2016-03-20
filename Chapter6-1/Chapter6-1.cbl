@@ -32,12 +32,12 @@
                        10  Initial2                        PIC X(1).
                    05  Last_Name                           PIC X(10).
                    05  Month_Trans                         PIC X(2).
-                   05  Year_Trans                          PIC X(5).
+                   05  Year_Trans                          PIC X(4).
                    05  Amount_Trans                        PIC 9(4)V9(2).
                    
            FD  CustRpt
                Record Contains 100 Characters.
-               01  Print_Buffer                            PIC X(100).
+               01  Print_Buffer                            PIC X(250).
            
            Working-Storage Section.
                COPY "WS_Date.cpy" REPLACING LEADING ==Prefix== BY ==WS==.
@@ -53,30 +53,25 @@
                    CALL "Validations" USING by CONTENT File_Status.
                OPEN OUTPUT CustRpt
                    CALL "Validations" USING by CONTENT File_Status.
-                 
-                MOVE FUNCTION CURRENT-DATE TO WS_Current_Date.
-                
-                CALL 'DateFormat' USING WS_Current_Date.
-                MOVE WS_Current_Date TO WS_Date
-                MOVE WS_Date TO Formatted_Date.
-                INVOKE type Debug::WriteLine(Formatted_Date).
                    
-      *            PERFORM 900-Date-Format
+               MOVE FUNCTION CURRENT-DATE (1:8) TO WS_Current_Date.
+               MOVE FUNCTION CURRENT-DATE(9:8) to WS_Current_Time.
                    
-                   WRITE Print_Buffer FROM HeaderMain
-                   WRITE Print_Buffer FROM HeaderMain2 AFTER ADVANCING 1 LINES
-                   WRITE Print_Buffer FROM HeaderDate AFTER ADVANCING 1 LINES
+               PERFORM 900-FormatDate.
+               PERFORM 1000-FormatTime.
+               
+               WRITE Print_Buffer FROM HeaderMain
+      *        WRITE Print_Buffer FROM HeaderMain2 AFTER ADVANCING 1 LINES
+      *        WRITE Print_Buffer FROM HeaderDate AFTER ADVANCING 1 LINES
+      *        WRITE Print_Buffer FROM HeaderTime.
            
            Stop Run.
-           
-      *    900-Date-Format.
-      *    
-      *            MOVE FUNCTION CURRENT-DATE TO Current_Date.
-      *            MOVE CD_Year TO WS_Year_Temp.
-      *            MOVE CD_Month TO WS_Month_Temp.
-      *            MOVE CD_Day TO WS_Day_Temp.
-      *            MOVE WS_Date TO HeaderDate.
-      *            
-      *            INVOKE type Debug::WriteLine(HeaderDate).
-                   
+       
+           900-FormatDate.
+               CALL 'DateFormat' USING WS_Current_Date
+               UNSTRING WS_Current_Date INTO HeaderDate.
+           1000-FormatTime.
+               CALL 'TimeFormat' USING WS_Current_Time
+               MOVE WS_Current_Time TO HeaderTime.
+               
        End Program.
