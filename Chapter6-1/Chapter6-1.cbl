@@ -44,18 +44,23 @@
                COPY "CopyBooks/Misc.cpy".
                COPY "CopyBooks/HeaderMain.cpy".
                COPY "CopyBooks\HeaderColumns.cpy".
-               COPY "COpyBooks\DetailLine.cpy".
+               COPY "CopyBooks\DetailLine.cpy".
+               COPY "CopyBooks\Footer.cpy".
+              
            
        Procedure Division.
        
            Initilization.
-			OPEN INPUT CustMast
+           
+               INITIALIZE Sub_Total_Purchases, Total_Purchases
+			   OPEN INPUT CustMast
                    CALL "Validations" USING File_Status
                OPEN OUTPUT CustRpt
                    CALL "Validations" USING File_Status
                
                PERFORM 100-Write-Headings
                PERFORM 200-Read-Records until No_More_Records
+               PERFORM 350-Write-Footers
                PERFORM 400-Close-Program
                STOP RUN.
                
@@ -72,12 +77,22 @@
                READ CustMast
                    AT END SET No_More_Records TO TRUE
                        NOT AT END
+                           PERFORM 250-Calculations
                            PERFORM 300-Write-Records.
-                           
+           
+           250-Calculations.
+      *        ADD Amount_Trans OF CustomerRecord TO Sub_Total_Purchases
+      *        MOVE Sub_Total_Purchases TO Total_Purchases.
+               COMPUTE Sub_Total_Purchases = Sub_Total_Purchases + Amount_Trans OF CustomerRecord
+               MOVE Sub_Total_Purchases TO Total_Purchases.
+           
            300-Write-Records.
                MOVE CORRESPONDING CustomerRecord TO CustomerDetail
                WRITE Print_Buffer FROM CustomerDetail AFTER ADVANCING 1 LINES.
                
+           350-Write-Footers.
+               WRITE Print_Buffer FROM FooterDetail AFTER ADVANCING 2 LINES.
+             
            400-Close-Program.
                CLOSE CustMast
                CLOSE CustRpt.

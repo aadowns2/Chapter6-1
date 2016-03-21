@@ -50,6 +50,7 @@
     <None Include="App_Data\CustomerData.DAT" />
     <None Include="App_Report\CustomerReport.Dat" />
     <None Include="CopyBooks\DetailLine.cpy" />
+    <None Include="CopyBooks\Footer.cpy" />
     <None Include="CopyBooks\HeaderMain.cpy" />
     <None Include="CopyBooks\HeaderColumns.cpy" />
     <None Include="CopyBooks\Misc.cpy" />
