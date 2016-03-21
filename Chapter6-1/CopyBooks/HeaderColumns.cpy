@@ -1,5 +1,6 @@
       * HeaderColumns
-       01  PIC X(5)    value spaces.
-       01  PIC X(9)    value 'Name'.
-       01  PIC X(22)   value 'Date of Transaction'.
-       01  PIC X(21)   value 'Amount of Transaction'.
+       01  HeaderColumns. 
+           05  PIC X(4)    value spaces.
+           05  PIC X(7)    value 'Name'.
+           05  PIC X(22)   value 'Date of Transaction'.
+           05  PIC X(21)   value 'Amount of Transaction'.

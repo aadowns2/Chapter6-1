@@ -36,7 +36,7 @@
                    05  Amount_Trans                        PIC 9(4)V9(2).
                    
            FD  CustRpt
-               Record Contains 100 Characters.
+               Record Contains 132 Characters.
                01  Print_Buffer                            PIC X(132).
            
            Working-Storage Section.
@@ -49,23 +49,24 @@
        Procedure Division.
        
            Initilization.
-			   INITIALIZE Print_Buffer.
+			   INITIALIZE Print_Buffer
                OPEN INPUT CustMast
-                   CALL "Validations" USING by CONTENT File_Status.
+                   CALL "Validations" USING File_Status
                OPEN OUTPUT CustRpt
-                   CALL "Validations" USING by CONTENT File_Status.
+                   CALL "Validations" USING File_Status
                
-               PERFORM 100-Write-Headings.
-               PERFORM 200-Read-Records until No_More_Records.
-               PERFORM 400-Close-Program.
+               PERFORM 100-Write-Headings
+               PERFORM 200-Read-Records until No_More_Records
+               PERFORM 400-Close-Program
                STOP RUN.
                
            100-Write-Headings.
                PERFORM 500-FormatDate
                PERFORM 600-FormatTime
                WRITE Print_Buffer FROM HeaderMain
-               WRITE Print_Buffer FROM HeaderMain2 AFTER ADVANCING 1 LINES.
-               WRITE Print_Buffer FROM HeaderMain3 AFTER ADVANCING 1 LINES.
+               WRITE Print_Buffer FROM HeaderMain2
+               WRITE Print_Buffer FROM HeaderMain3
+               WRITE Print_Buffer FROM HeaderColumns AFTER ADVANCING 1 LINE.
                
            200-Read-Records.
                READ CustMast
@@ -75,20 +76,20 @@
                            
            300-Write-Records.
                MOVE CORRESPONDING CustomerRecord TO CustomerDetail
-               WRITE Print_Buffer FROM CustomerDetail AFTER ADVANCING 1 LINES.
+               WRITE Print_Buffer FROM CustomerDetail AFTER ADVANCING 2 LINES.
                
            400-Close-Program.
                CLOSE CustMast
                CLOSE CustRpt.
                
            500-FormatDate.
-               MOVE FUNCTION CURRENT-DATE (1:8) TO WS_Current_Date
-               CALL 'DateFormat' USING WS_Current_Date.
+               CALL 'DateFormat' USING WS_Current_Date
                UNSTRING WS_Current_Date INTO HeaderDate.
                
            600-FormatTime.
-               MOVE FUNCTION CURRENT-DATE(9:8) to WS_Current_Time
-               CALL 'TimeFormat' USING WS_Current_Time.
-               UNSTRING WS_Current_Time INTO HeaderTime.
+              
+               CALL 'TimeFormat' USING WS_Current_Time
+               UNSTRING WS_Current_Time INTO HeaderTime
+               INSPECT HeaderTime (1:8) Replacing all spaces by ":".
                
        End Program.

@@ -7,7 +7,8 @@
            05                  PIC X(41)   value 'Prepared for the Company By Anthony Downs'.
        01  HeaderMain3.
            05                      PIC X(6)    value 'Date: '.
-           05  HeaderDate          PIC X(2)/X(2)/X(4).
+           05  HeaderDate          PIC 9(2)/9(2)/9(4).
            05                      PIC X(5)    value spaces.
            05                      PIC X(6)    value 'Time: '.
-           05  HeaderTime          PIC X(2)B(2)X(2)B(2)X(2).
+           05  HeaderTime          PIC X(2)BX(2)BX(2)BX(2).
+               
