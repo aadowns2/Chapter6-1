@@ -49,8 +49,7 @@
        Procedure Division.
        
            Initilization.
-			   INITIALIZE Print_Buffer
-               OPEN INPUT CustMast
+			OPEN INPUT CustMast
                    CALL "Validations" USING File_Status
                OPEN OUTPUT CustRpt
                    CALL "Validations" USING File_Status
@@ -61,6 +60,7 @@
                STOP RUN.
                
            100-Write-Headings.
+               INITIALIZE Print_Buffer
                PERFORM 500-FormatDate
                PERFORM 600-FormatTime
                WRITE Print_Buffer FROM HeaderMain
@@ -76,7 +76,7 @@
                            
            300-Write-Records.
                MOVE CORRESPONDING CustomerRecord TO CustomerDetail
-               WRITE Print_Buffer FROM CustomerDetail AFTER ADVANCING 2 LINES.
+               WRITE Print_Buffer FROM CustomerDetail AFTER ADVANCING 1 LINES.
                
            400-Close-Program.
                CLOSE CustMast
@@ -87,7 +87,6 @@
                UNSTRING WS_Current_Date INTO HeaderDate.
                
            600-FormatTime.
-              
                CALL 'TimeFormat' USING WS_Current_Time
                UNSTRING WS_Current_Time INTO HeaderTime
                INSPECT HeaderTime (1:8) Replacing all spaces by ":".

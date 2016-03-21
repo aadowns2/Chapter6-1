@@ -7,7 +7,7 @@
            Working-Storage Section.
            01  ValidationCodes                         PIC X(35).
                88  File_Error                          value "Error in opening files".
-               88  File_Success                        value "Files were successfull".
+               88  File_Success                        value "File open successful".
            
            Linkage Section.
            01  LK_File_Status                         PIC X(2).
