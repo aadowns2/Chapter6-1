@@ -1,15 +1,9 @@
        Identification Division.
            Program-ID. Chapter6-1.
                Author. Anthony Downs
-               Installation.
                Date-Written. March 18, 2016.
-               Date-Compiled.
-               Security.
                
        Environment Division.
-           Configuration Section.
-               Special-Names.
-               
            Input-Output Section.
                File-Control.
                    Select CustMast assign to CustomerData
@@ -19,8 +13,6 @@
                    Select CustRpt assign to CustomerReport
                        File Status is File_Status
                        Organization is Line Sequential.
-               
-               I-O-Control.
                
        Data Division.
            File Section.
@@ -46,26 +38,25 @@
                COPY "CopyBooks\HeaderColumns.cpy".
                COPY "CopyBooks\DetailLine.cpy".
                COPY "CopyBooks\Footer.cpy".
-              
            
        Procedure Division.
        
            Initilization.
-           
-               INITIALIZE Sub_Total_Purchases, Total_Purchases
-			   OPEN INPUT CustMast
-                   CALL "Validations" USING File_Status
-               OPEN OUTPUT CustRpt
-                   CALL "Validations" USING File_Status
-               
+               INITIALIZE Sub_Total_Purchases, Total_Purchases, Print_Buffer
+			   PERFORM 050-Open-Files.
                PERFORM 100-Write-Headings
                PERFORM 200-Read-Records until No_More_Records
                PERFORM 350-Write-Footers
                PERFORM 400-Close-Program
                STOP RUN.
                
+           050-Open-Files.
+               OPEN INPUT CustMast
+                   CALL "Validations" USING File_Status
+               OPEN OUTPUT CustRpt
+                   CALL "Validations" USING File_Status.
+               
            100-Write-Headings.
-               INITIALIZE Print_Buffer
                PERFORM 500-FormatDate
                PERFORM 600-FormatTime
                WRITE Print_Buffer FROM HeaderMain
@@ -81,8 +72,6 @@
                            PERFORM 300-Write-Records.
            
            250-Calculations.
-      *        ADD Amount_Trans OF CustomerRecord TO Sub_Total_Purchases
-      *        MOVE Sub_Total_Purchases TO Total_Purchases.
                COMPUTE Sub_Total_Purchases = Sub_Total_Purchases + Amount_Trans OF CustomerRecord
                MOVE Sub_Total_Purchases TO Total_Purchases.
            

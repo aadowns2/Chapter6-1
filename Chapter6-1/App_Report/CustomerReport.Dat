@@ -1,17 +1,17 @@
                      Agile Company Customer Report
                  Prepared for the Company By Anthony Downs
-Date: 03/21/2016     Time: 11:20:31 AM
+Date: 03/21/2016                                             Time: 11:39:42 AM
 
-    Name   Date of Transaction   Amount of Transaction
-P,Q     NEWMAN         01     2003     $   12.50
-R,R     REDFORD        06     2003     $1,234.53
-E,L     TAYLOR         04     2003     $  100.00
-N,B     STERN          09     2003     $  200.00
-C,D     HAMMEL         07     2003     $  654.50
-R,A     STERN          11     2003     $8,840.08
-L,O     STERN          07     2003     $6,887.78
-M,E     STERN          02     2003     $   98.99
-H,R     FORD           12     2003     $6,848.00
-C,R     FISHER         01     2003     $  862.12
+Name                 Date        Amount
+P,Q   NEWMAN         01/2003     $   12.50
+R,R   REDFORD        06/2003     $1,234.53
+E,L   TAYLOR         04/2003     $  100.00
+N,B   STERN          09/2003     $  200.00
+C,D   HAMMEL         07/2003     $  654.50
+R,A   STERN          11/2003     $8,840.08
+L,O   STERN          07/2003     $6,887.78
+M,E   STERN          02/2003     $   98.99
+H,R   FORD           12/2003     $6,848.00
+C,R   FISHER         01/2003     $  862.12
 
-                      Total Purchases: $25,738.50
+                Total Purchases: $25,738.50
